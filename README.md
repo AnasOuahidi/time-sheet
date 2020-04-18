@@ -1,3 +1,5 @@
 # TimeSheet
 
-Project to create a monthly activity reports for my clients
+A project to create monthly activity reports for my clients
+
+[TimeSheet](https://anasouahidi.github.io/time-sheet/ "TimeSheet")
