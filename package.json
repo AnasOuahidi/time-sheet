@@ -4,7 +4,7 @@
   "scripts": {
     "hmr": "ng serve --open --configuration hmr",
     "start": "ng serve --hmr --open",
-    "deploy": "ng deploy"
+    "deploy": "ng deploy --base-href=/time-sheet/"
   },
   "private": true,
   "dependencies": {
