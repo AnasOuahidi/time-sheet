@@ -1,0 +1,153 @@
+.ts-toolbar-container {
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 16px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  justify-content: space-between;
+}
+
+.ts-toolbar-title {
+  font-size: 28px;
+  vertical-align: text-bottom;
+  font-family: Poppins, sans-serif !important;
+}
+
+.ts-layout-container {
+  margin-top: 15px;
+  height: 80%;
+}
+
+.ts-header-container {
+  margin-top: 50px;
+  display: flex;
+}
+
+.ts-header-right {
+  width: 50%;
+}
+
+.ts-header-left {
+  width: 50%;
+  margin-left: 25px;
+}
+
+.ts-input {
+  width: 100%
+}
+
+.ts-month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.ts-month-picker .mat-calendar-arrow {
+  display: none;
+}
+
+.ts-pdf-header-container {
+  margin-top: 50px;
+  display: flex;
+}
+
+.ts-pdf-header-part-1, .ts-pdf-header-part-5 {
+  flex: 0.2;
+}
+
+.ts-pdf-header-part-2, .ts-pdf-header-part-4 {
+  flex: 1.5;
+}
+
+.ts-pdf-header-part-3 {
+  flex: 0.1;
+}
+
+.ts-pdf-header-text {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.ts-pdf-activity-title-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.ts-pdf-activity-table-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.ts-pdf-activity-table-container table {
+  width: 1000px;
+}
+
+.ts-pdf-header-title {
+  font-size: 50px;
+  line-height: 50px;
+  text-decoration: underline;
+}
+
+.ts-pdf-activity-table-dark-cell {
+  background-color: #ABABAB;
+}
+
+.ts-pdf-activity-table-darken-cell {
+  background-color: #666666;
+}
+
+.ts-check-all {
+  cursor: pointer;
+}
+
+.ts-pdf-input {
+  width: 1.5vw;
+  text-align: center;
+}
+
+.ts-pdf-activity-cell {
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ts-pdf-total-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.ts-pdf-button-container {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.ts-pdf-validate-button {
+  width: 15%;
+  height: 45px;
+}
+
+.ts-pdf-back-button {
+  width: 15%;
+  height: 45px;
+  margin-right: 10px;
+}
+
+.ts-pdf-footer-container {
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.ts-pdf-footer-text {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,153 @@
+<mat-toolbar color="primary">
+  <div class="container ts-toolbar-container">
+    <span class="ts-toolbar-title mat-typography">TimeSheet</span>
+  </div>
+</mat-toolbar>
+
+<div class="container ts-layout-container" *ngIf="!isPdf">
+  <div class="ts-header-container">
+    <div class="ts-header-right">
+      <mat-form-field class="ts-input">
+        <mat-label>Employee Name</mat-label>
+        <input matInput [(ngModel)]="header.employeeName">
+      </mat-form-field>
+      <br><br>
+      <mat-form-field class="ts-input">
+        <mat-label>Employee Email</mat-label>
+        <input matInput type="email" [(ngModel)]="header.employeeEmail">
+      </mat-form-field>
+      <br> <br>
+      <mat-form-field class="ts-input">
+        <mat-label>Select the month</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="month" (click)="dp.open()">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="ts-month-picker">
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="ts-header-left">
+      <mat-form-field class="ts-input">
+        <mat-label>Company Name</mat-label>
+        <input matInput [(ngModel)]="header.companyName">
+      </mat-form-field>
+      <br><br>
+      <mat-form-field class="ts-input">
+        <mat-label>Manager Name</mat-label>
+        <input matInput [(ngModel)]="header.managerName">
+      </mat-form-field>
+      <br><br>
+      <mat-form-field class="ts-input">
+        <mat-label>Manager Email</mat-label>
+        <input matInput type="email" [(ngModel)]="header.managerEmail">
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf="!!month?.value" class="ts-pdf-activity-title-container">
+    <div>
+      <p class="ts-pdf-header-title">Period: {{monthName}} {{year}}</p>
+    </div>
+  </div>
+  <div *ngIf="!!month?.value" class="ts-pdf-activity-table-container">
+    <table class="table table-bordered">
+      <thead class="thead-light">
+      <tr>
+        <td class="ts-pdf-activity-cell" rowspan="2">Activity</td>
+        <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
+            [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">{{date.dayName}}</td>
+        <td class="ts-pdf-activity-cell" rowspan="2">Total</td>
+      </tr>
+      <tr>
+        <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
+            [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">{{date.dayDate}}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="ts-pdf-activity-cell">Technical Service <i class="fa fa-check ts-check-all" (click)="checkAll()"></i>
+        </td>
+        <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
+            [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">
+          <input (keyup)="calculateTotal()" type="text" class="ts-pdf-input" [(ngModel)]="date.activity"
+                 *ngIf="!date.isWeekEnd && !date.isHoliday">
+        </td>
+        <td class="ts-pdf-activity-cell">{{total}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ts-pdf-total-container">
+    <p *ngIf="!!total" class="ts-pdf-header-text">Total : {{total}} days</p>
+  </div>
+  <div *ngIf="!!total" class="ts-pdf-button-container">
+    <button mat-raised-button color="primary" class="ts-pdf-validate-button" (click)="showPdf()">Validate</button>
+  </div>
+</div>
+
+<div #pdfTable *ngIf="isPdf">
+  <div class="ts-pdf-header-container">
+    <div class="ts-pdf-header-part-1"></div>
+    <div class="ts-pdf-header-part-2">
+      <p class="ts-pdf-header-text">Employee Name : {{header.employeeName}}</p><br>
+      <p class="ts-pdf-header-text">Employee Email : {{header.employeeEmail}}</p><br>
+    </div>
+    <div class="ts-pdf-header-part-3"></div>
+    <div class="ts-pdf-header-part-4">
+      <p class="ts-pdf-header-text">Company Name : {{header.companyName}}</p><br>
+      <p class="ts-pdf-header-text">Manager Name : {{header.managerName}}</p><br>
+      <p class="ts-pdf-header-text">Manager Email : {{header.managerEmail}}</p>
+    </div>
+    <div class="ts-pdf-header-part-5"></div>
+  </div>
+  <div class="ts-pdf-activity-title-container">
+    <div>
+      <p class="ts-pdf-header-title">Period: {{monthName}} {{year}}</p>
+    </div>
+  </div>
+  <div class="ts-pdf-activity-table-container">
+    <table class="table table-bordered">
+      <thead class="thead-light">
+      <tr>
+        <td class="ts-pdf-activity-cell" rowspan="2">Activity</td>
+        <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd">{{date.dayName}}</td>
+        <td class="ts-pdf-activity-cell" rowspan="2">Total</td>
+      </tr>
+      <tr>
+        <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd">{{date.dayDate}}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="ts-pdf-activity-cell">Technical Service <i class="fa fa-check ts-check-all" (click)="checkAll()"></i>
+        </td>
+        <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd">
+          {{!date.isWeekEnd ? date.activity : ''}}
+        </td>
+        <td class="ts-pdf-activity-cell">{{total}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ts-pdf-total-container">
+    <p class="ts-pdf-header-text">Total : {{total}} days</p>
+  </div>
+ <div class="ts-pdf-footer-container">
+   <hr>
+   <div class="ts-pdf-footer-text">
+     <p>Time sheet generated on : {{today}}</p>
+   </div>
+ </div>
+</div>
+<div *ngIf="isPdf" class="ts-pdf-button-container">
+  <button mat-raised-button color="warn" class="ts-pdf-back-button" (click)="goBack()">Back</button>
+  <button mat-raised-button color="primary" class="ts-pdf-validate-button" (click)="generatePdf()">Generate</button>
+</div>

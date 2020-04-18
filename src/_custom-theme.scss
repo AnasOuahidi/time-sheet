@@ -1,0 +1,17 @@
+@import '../node_modules/@angular/material/theming';
+
+@include mat-core();
+
+$custom-theme-primary: mat-palette($mat-indigo, 500);
+$custom-theme-accent: mat-palette($mat-grey, 900);
+$custom-theme-warn: mat-palette($mat-grey, 50);
+
+$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+
+@include angular-material-theme($custom-theme);
+
+.mat-option-text {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
