@@ -2,8 +2,8 @@
   "name": "time-sheet",
   "version": "0.0.0",
   "scripts": {
-    "hmr": "ng serve --open --configuration hmr",
     "start": "ng serve --hmr --open",
+    "hmr": "ng serve --open --configuration hmr",
     "deploy": "ng deploy --base-href=/time-sheet/"
   },
   "private": true,

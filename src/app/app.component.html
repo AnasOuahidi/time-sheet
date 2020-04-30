@@ -75,7 +75,7 @@
             [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
             [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">
           <input (keyup)="calculateTotal()" type="text" class="ts-pdf-input" [(ngModel)]="date.activity"
-                 *ngIf="!date.isWeekEnd && !date.isHoliday">
+                 [disabled]="date.isWeekEnd || date.isHoliday">
         </td>
         <td class="ts-pdf-activity-cell">{{total}}</td>
       </tr>
@@ -116,12 +116,14 @@
       <tr>
         <td class="ts-pdf-activity-cell" rowspan="2">Activity</td>
         <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
-            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd">{{date.dayName}}</td>
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
+            [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">{{date.dayName}}</td>
         <td class="ts-pdf-activity-cell" rowspan="2">Total</td>
       </tr>
       <tr>
         <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
-            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd">{{date.dayDate}}</td>
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
+            [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">{{date.dayDate}}</td>
       </tr>
       </thead>
       <tbody>
@@ -129,7 +131,8 @@
         <td class="ts-pdf-activity-cell">Technical Service <i class="fa fa-check ts-check-all" (click)="checkAll()"></i>
         </td>
         <td class="ts-pdf-activity-cell" *ngFor="let date of dates; let index = index"
-            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd">
+            [class.ts-pdf-activity-table-dark-cell]="date.isWeekEnd"
+            [class.ts-pdf-activity-table-darken-cell]="date.isHoliday">
           {{!date.isWeekEnd ? date.activity : ''}}
         </td>
         <td class="ts-pdf-activity-cell">{{total}}</td>
