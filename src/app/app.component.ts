@@ -132,8 +132,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.total = 0;
     for (const date of this.dates) {
       if (!date.isWeekEnd && !date.isHoliday) {
-        date.activity = '0.5';
-        this.total+= 0.5;
+        date.activity = '1';
+        this.total += 1;
       }
     }
   }
