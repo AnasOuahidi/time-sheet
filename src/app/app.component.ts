@@ -73,7 +73,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.month = new FormControl(moment());
     this.year = this.month.value.format('YYYY');
     this.holidaysSubscription = this.App.getHolidays(this.year).subscribe((holidays: { date: string, nom_jour_ferie: string }[]) => {
-      this.holidays = holidays.map((holiday: { date: string, nom_jour_ferie: string }) => holiday.date);
+      const holidaysFormatted: string[] = [];
+      for (const holiday of holidays) {
+        if (holiday.nom_jour_ferie !== 'Lundi de Pentecôte') {
+          holidaysFormatted.push(holiday.date);
+        }
+      }
+      this.holidays = holidaysFormatted;
       this.validate();
     });
   }
