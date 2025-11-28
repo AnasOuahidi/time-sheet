@@ -143,12 +143,12 @@
   <div class="ts-pdf-total-container">
     <p class="ts-pdf-header-text">Total : {{total}} days</p>
   </div>
- <div class="ts-pdf-footer-container">
-   <hr>
-   <div class="ts-pdf-footer-text">
-     <p>Time sheet generated on : {{today}}</p>
-   </div>
- </div>
+  <div class="ts-pdf-footer-container">
+    <hr>
+    <div class="ts-pdf-footer-text">
+      <p>Time sheet generated on : {{today}}</p>
+    </div>
+  </div>
 </div>
 <div *ngIf="isPdf" class="ts-pdf-button-container">
   <button mat-raised-button color="warn" class="ts-pdf-back-button" (click)="goBack()">Back</button>

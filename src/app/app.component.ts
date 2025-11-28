@@ -40,7 +40,8 @@ export const MY_FORMATS = {
   ]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  constructor (private App: AppService) {}
+  constructor (private App: AppService) {
+  }
 
   private holidaysSubscription: Subscription;
 
@@ -72,14 +73,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.today = moment().format('DD/MM/YYYY HH:mm:ss');
     this.month = new FormControl(moment());
     this.year = this.month.value.format('YYYY');
-    this.holidaysSubscription = this.App.getHolidays(this.year).subscribe((holidays: { date: string, nom_jour_ferie: string }[]) => {
-      const holidaysFormatted: string[] = [];
-      for (const holiday of holidays) {
-        if (holiday.nom_jour_ferie !== 'Lundi de Pentecôte') {
-          holidaysFormatted.push(holiday.date);
-        }
-      }
-      this.holidays = holidaysFormatted;
+    this.holidaysSubscription = this.App.getHolidays(this.year).subscribe((holidays: { [date: string]: string }) => {
+      this.holidays = this.formatHolidays(holidays);
       this.validate();
     });
   }
@@ -90,12 +85,23 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  private formatHolidays(holidays: { [date: string]: string }): string[] {
+    const holidaysFormatted: string[] = [];
+    for (const holiday in holidays) {
+      if (holidays[holiday] !== 'Lundi de Pentecôte') {
+        holidaysFormatted.push(holiday);
+      }
+    }
+
+    return holidaysFormatted;
+  }
+
   chosenYearHandler (normalizedYear: Moment) {
     const ctrlValue = this.month.value;
     const year = normalizedYear.year();
     if (`${year}` !== this.year) {
-      this.holidaysSubscription = this.App.getHolidays(`${year}`).subscribe((holidays: { date: string, nom_jour_ferie: string }[]) => {
-        this.holidays = holidays.map((holiday: { date: string, nom_jour_ferie: string }) => holiday.date);
+      this.holidaysSubscription = this.App.getHolidays(`${year}`).subscribe((holidays: { [date: string]: string }) => {
+        this.holidays = this.formatHolidays(holidays);
       });
     }
     ctrlValue.year(year);
@@ -120,7 +126,7 @@ export class AppComponent implements OnInit, OnDestroy {
     end.add(1, 'months');
     const dates: { dayName: string, dayDate: string, isWeekEnd: boolean, isHoliday: boolean, activity?: string }[] = [];
 
-    for (let m = moment(start); m.isBefore(end); m.add(1, 'days')) {
+    for (const m = moment(start); m.isBefore(end); m.add(1, 'days')) {
       const day = m.weekday();
       const date = m.format('YYYY-MM-DD');
       const isHoliday = this.holidays.indexOf(date) !== -1;
